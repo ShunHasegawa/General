@@ -18,4 +18,16 @@ Then, update previous packrat dependent files for upgraded version by running:
 packrat::migrate()
 ```
 
-Then, check status by `packrat::status()`, and follow the returend instructions.
+Then, check status by `packrat::status()`, and follow the returend instructions. Such packages as `knitr`, `rmarkdown` are not called but need installing. Hence every time when you look at `packrat::status`, you get something like:
+
+```
+The following packages have been updated in your library, but have not been recorded in packrat:
+                library   packrat
+    htmltools     0.2.4        NA
+    rmarkdown    0.2.49        NA
+    yaml         2.1.13        NA
+
+Use packrat::snapshot() to record these packages in packrat.
+```
+
+You can leave it as it is, but if you want to remove, create a .R file, "UncalledPckg.R" for example, and (pretend to) call those packages there.
