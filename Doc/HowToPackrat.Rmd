@@ -1,0 +1,21 @@
+---
+title: "Upgrading packrat"
+author: "ShunHasegawa"
+date: "Monday, June 30, 2014"
+output: html_document
+---
+
+This document describes how to upgrade `packrat` for recent update in June 2014. Firstly, delate `.Rprofile`. Then install the up-to-date `packrat`. Also look at <https://github.com/rstudio/packrat/issues/111>.
+
+```{r, eval=FALSE}
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("rstudio/packrat", ref = "feature/source-repos")
+```
+
+Then, update previous packrat dependent files for upgraded version by running:
+
+```{r, eval=FALSE}
+packrat::migrate()
+```
+
+Then, check status by `packrat::status()`, and follow the returend instructions.
