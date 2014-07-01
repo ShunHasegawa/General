@@ -24,7 +24,7 @@ local({
     if (!is.na(Sys.getenv("RSTUDIO", unset = NA)) &&
           is.na(Sys.getenv("RSTUDIO_PACKRAT_BOOTSTRAP", unset = NA))) {
       Sys.setenv("RSTUDIO_PACKRAT_BOOTSTRAP" = "1")
-      setHook("rstudio.sessionInit", function() {
+      setHook("rstudio.sessionInit", function(...) {
         source("packrat/init.R")
       })
       return(invisible(NULL))
@@ -107,13 +107,18 @@ local({
     message("> Installing packrat into project private library:")
     message("- ", shQuote(lib))
 
+    surround <- function(x, with) {
+      if (!length(x)) return(character())
+      paste0(with, x, with)
+    }
+
     ## The following is performed because a regular install.packages call can fail
     peq <- function(x, y) paste(x, y, sep = " = ")
     installArgs <- c(
-      peq("pkgs", shQuote(packratSrcPath)),
-      peq("lib", shQuote(lib)),
+      peq("pkgs", surround(packratSrcPath, with = "'")),
+      peq("lib", surround(lib, with = "'")),
       peq("repos", "NULL"),
-      peq("type", shQuote("source"))
+      peq("type", surround("source", with = "'"))
     )
     installCmd <- paste(sep = "",
                         "utils::install.packages(",
@@ -121,11 +126,11 @@ local({
                         ")")
 
     fullCmd <- paste(
-      shQuote(file.path(R.home("bin"), "R")),
+      surround(file.path(R.home("bin"), "R"), with = "\""),
       "--vanilla",
       "--slave",
       "-e",
-      shQuote(installCmd)
+      surround(installCmd, with = "\"")
     )
     system(fullCmd)
 
@@ -135,10 +140,10 @@ local({
     ## an 'installed from source' version
 
     ## -- InstallAgent -- ##
-  installAgent <- 'InstallAgent: packrat 0.3.0'
+    installAgent <- 'InstallAgent: packrat 0.3.0'
 
     ## -- InstallSource -- ##
-  installSource <- 'InstallSource: source'
+    installSource <- 'InstallSource: source'
 
     packratDescPath <- file.path(lib, "packrat", "DESCRIPTION")
     DESCRIPTION <- readLines(packratDescPath)
