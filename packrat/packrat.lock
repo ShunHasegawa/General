@@ -46,7 +46,7 @@ Version: 0.3.0
 GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: master
-GithubSha1: c17b462ed00051d7e5cb2244e68fcb6a6b8fe073
+GithubSha1: 3c15ac4df9a564ea0ca354c9890c98b83cb1b352
 
 Package: rmarkdown
 Source: github

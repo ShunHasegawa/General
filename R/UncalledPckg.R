@@ -1,2 +1,2 @@
 library(knitr)
-libary(rmarkdown)
+library(rmarkdown)
