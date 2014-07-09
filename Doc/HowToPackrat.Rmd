@@ -31,3 +31,6 @@ Use packrat::snapshot() to record these packages in packrat.
 ```
 
 You can leave it as it is, but if you want to remove, create a .R file, "UncalledPckg.R" for example, and (pretend to) call those packages there.
+
+## Packages not available on CRAN or github
+The sources of those packages that are not on CRAN or github (e.g. "HIEv") can't be obtained via `packrat`. Hence, you'd better install them directly to your local directory, otherwise you may have troubles with updating your personal library by `packrat::snapshot()` when you add new packages. You need to use `packrat::extlib("Private.package.Name")` to call them in your script.
